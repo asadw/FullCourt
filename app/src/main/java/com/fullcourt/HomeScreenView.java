@@ -94,6 +94,8 @@ public class HomeScreenView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        // test asad comment for push to github
+
         // Draw the text.
         canvas.drawText(mExampleString,
                 paddingLeft + (contentWidth - mTextWidth) / 2,
