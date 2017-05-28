@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "181074644733",
+    "firebase_url": "https://fullcourt-1227c.firebaseio.com",
+    "project_id": "fullcourt-1227c",
+    "storage_bucket": "fullcourt-1227c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181074644733:android:092bfb80b16d7b1e",
+        "android_client_info": {
+          "package_name": "com.fullcourt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181074644733-uiaivd6sm5oq624br948ncf6hhph0ije.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fullcourt",
+            "certificate_hash": "2716DE6E26CE2D3AC3100DCEC9DCD64876CD5133"
+          }
+        },
+        {
+          "client_id": "181074644733-vduc73iitvvjgfsjbh37b4gkdp2sg75c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxd3lE9uh_e58AystZaqR4ofEatmWnFIE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181074644733-vduc73iitvvjgfsjbh37b4gkdp2sg75c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
