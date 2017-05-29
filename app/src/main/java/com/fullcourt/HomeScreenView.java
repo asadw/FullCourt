@@ -10,6 +10,9 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.google.firebase.database.connection.*;
+import com.google.firebase.messaging.*;
+
 /**
  * TODO: document your custom view class.
  */
@@ -95,6 +98,7 @@ public class HomeScreenView extends View {
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
         // test asad comment for push to github
+        // hello github!
 
         // Draw the text.
         canvas.drawText(mExampleString,
