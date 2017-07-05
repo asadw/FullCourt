@@ -1,6 +1,8 @@
 package com.fullcourt;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,8 +12,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.google.firebase.database.connection.*;
-import com.google.firebase.messaging.*;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * TODO: document your custom view class.
@@ -72,6 +74,14 @@ public class HomeScreenView extends View {
 
         // Update TextPaint and text measurements from attributes
         invalidateTextPaintAndMeasurements();
+
+        Context c = FirebaseDatabase.getInstance().getApp().getApplicationContext();
+        c.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+            }
+        }, null);
     }
 
     private void invalidateTextPaintAndMeasurements() {
