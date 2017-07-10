@@ -1,5 +1,6 @@
 package com.fullcourt;
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.FirebaseApp;
 
 /**
  * TODO: document your custom view class.
@@ -45,23 +46,15 @@ public class HomeScreenView extends View {
 
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
-        final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.HomeScreenView, defStyle, 0);
+        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HomeScreenView, defStyle, 0);
 
-        mExampleString = a.getString(
-                R.styleable.HomeScreenView_exampleString);
-        mExampleColor = a.getColor(
-                R.styleable.HomeScreenView_exampleColor,
-                mExampleColor);
+        mExampleString = a.getString(R.styleable.HomeScreenView_exampleString);
+        mExampleColor = a.getColor(R.styleable.HomeScreenView_exampleColor, mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
-        mExampleDimension = a.getDimension(
-                R.styleable.HomeScreenView_exampleDimension,
-                mExampleDimension);
+        mExampleDimension = a.getDimension(R.styleable.HomeScreenView_exampleDimension, mExampleDimension);
 
-        if (a.hasValue(R.styleable.HomeScreenView_exampleDrawable)) {
-            mExampleDrawable = a.getDrawable(
-                    R.styleable.HomeScreenView_exampleDrawable);
+        if (a.hasValue(R.styleable.HomeScreenView_exampleDrawable)) {mExampleDrawable = a.getDrawable(R.styleable.HomeScreenView_exampleDrawable);
             mExampleDrawable.setCallback(this);
         }
 
@@ -74,14 +67,6 @@ public class HomeScreenView extends View {
 
         // Update TextPaint and text measurements from attributes
         invalidateTextPaintAndMeasurements();
-
-        Context c = FirebaseDatabase.getInstance().getApp().getApplicationContext();
-        c.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-            }
-        }, null);
     }
 
     private void invalidateTextPaintAndMeasurements() {
@@ -111,15 +96,11 @@ public class HomeScreenView extends View {
         // hello github!
 
         // Draw the text.
-        canvas.drawText(mExampleString,
-                paddingLeft + (contentWidth - mTextWidth) / 2,
-                paddingTop + (contentHeight + mTextHeight) / 2,
-                mTextPaint);
+        canvas.drawText(mExampleString, paddingLeft + (contentWidth - mTextWidth) / 2, paddingTop + (contentHeight + mTextHeight) / 2, mTextPaint);
 
         // Draw the example drawable on top of the text.
         if (mExampleDrawable != null) {
-            mExampleDrawable.setBounds(paddingLeft, paddingTop,
-                    paddingLeft + contentWidth, paddingTop + contentHeight);
+            mExampleDrawable.setBounds(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
         }
     }
