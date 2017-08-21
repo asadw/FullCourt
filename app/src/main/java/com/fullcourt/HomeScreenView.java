@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseException;
 
 /**
  * TODO: document your custom view class.
