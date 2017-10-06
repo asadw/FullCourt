@@ -46,6 +46,7 @@ public class HomeScreenView extends View {
 
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
+        // Asad
         final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HomeScreenView, defStyle, 0);
 
         mExampleString = a.getString(R.styleable.HomeScreenView_exampleString);
@@ -54,7 +55,8 @@ public class HomeScreenView extends View {
         // values that should fall on pixel boundaries.
         mExampleDimension = a.getDimension(R.styleable.HomeScreenView_exampleDimension, mExampleDimension);
 
-        if (a.hasValue(R.styleable.HomeScreenView_exampleDrawable)) {mExampleDrawable = a.getDrawable(R.styleable.HomeScreenView_exampleDrawable);
+        if (a.hasValue(R.styleable.HomeScreenView_exampleDrawable)) {
+            mExampleDrawable = a.getDrawable(R.styleable.HomeScreenView_exampleDrawable);
             mExampleDrawable.setCallback(this);
         }
 
