@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "181074644733-413n4ba3gbniboueqokqtlgk7ifrbf9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fullcourt",
+            "certificate_hash": "3b453a339c14c62ef1f00d756eaee3da6280d561"
+          }
+        },
+        {
           "client_id": "181074644733-uiaivd6sm5oq624br948ncf6hhph0ije.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fullcourt",
-            "certificate_hash": "2716DE6E26CE2D3AC3100DCEC9DCD64876CD5133"
+            "certificate_hash": "2716de6e26ce2d3ac3100dcec9dcd64876cd5133"
           }
         },
         {
