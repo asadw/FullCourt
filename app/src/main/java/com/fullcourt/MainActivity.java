@@ -1,6 +1,7 @@
 package com.fullcourt;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.os.Bundle;
 
 import java.util.Map;
@@ -14,6 +15,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,5 +46,20 @@ public class MainActivity extends AppCompatActivity {
         // Construct a PlaceDetectionClient.
         PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
+        try {
+            Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
+            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+                @Override
+                public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
+                    PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                    for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",  placeLikelihood.getPlace().getName(),  placeLikelihood.getLikelihood()));
+                    }
+                    likelyPlaces.release();
+                }
+            });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 }
