@@ -46,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
         // Construct a PlaceDetectionClient.
         PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
-        try {
-            Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
-            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+        Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
+        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                     PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
@@ -58,8 +57,5 @@ public class MainActivity extends AppCompatActivity {
                     likelyPlaces.release();
                 }
             });
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
     }
 }
