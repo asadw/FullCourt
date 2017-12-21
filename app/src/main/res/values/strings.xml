@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">FullCourt</string>
-    <string name="greeting">Hello Nevada!</string>
+    <string name="greeting">Hello, Nevada!</string>
 </resources>
