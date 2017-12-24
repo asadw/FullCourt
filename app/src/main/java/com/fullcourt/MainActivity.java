@@ -1,5 +1,10 @@
 package com.fullcourt;
 
+import android.util.Log;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -23,7 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    // private FusedLocationProviderClient client = new FusedLocationProviderClient(this);
+    private FusedLocationProviderClient client = new FusedLocationProviderClient(this);
     protected GeoDataClient mGeoDataClient;
 
     public MainActivity(){
@@ -46,16 +51,21 @@ public class MainActivity extends AppCompatActivity {
         // Construct a PlaceDetectionClient.
         PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
-        Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
-        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+        Context baseContext = this.getBaseContext();
+
+        int permission = ContextCompat.checkSelfPermission(baseContext, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
+            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                     PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
                     for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",  placeLikelihood.getPlace().getName(),  placeLikelihood.getLikelihood()));
+                        Log.i("TAG", String.format("Place '%s' has likelihood: %g", placeLikelihood.getPlace().getName(), placeLikelihood.getLikelihood()));
                     }
                     likelyPlaces.release();
                 }
             });
+        }
     }
 }
