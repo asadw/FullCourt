@@ -28,10 +28,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FusedLocationProviderClient client = new FusedLocationProviderClient(this);
+    private FusedLocationProviderClient client;
     protected GeoDataClient mGeoDataClient;
 
     public MainActivity(){
+
+        client = new FusedLocationProviderClient(this);
+
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
