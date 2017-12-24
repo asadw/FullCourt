@@ -1,5 +1,6 @@
 package com.fullcourt;
 
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.Manifest;
 import android.content.Context;
@@ -9,14 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
-
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
@@ -28,20 +24,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FusedLocationProviderClient client;
     protected GeoDataClient mGeoDataClient;
 
     public MainActivity(){
 
-        client = new FusedLocationProviderClient(this);
-
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myOtherRef = database.getReference("some_data");
 
-        myRef.setValue("Hello, Nevada!");
+        myRef.setValue("Hello, Nevada! Let's play DB!!");
         myRef.push();
 
+        myOtherRef.setValue("Let's upload more");
+        myOtherRef.push();
     }
 
     @Override
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // Construct a PlaceDetectionClient.
         PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
-        Context baseContext = this.getBaseContext();
+        Context baseContext = getApplicationContext();
 
         int permission = ContextCompat.checkSelfPermission(baseContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED) {
@@ -69,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                     likelyPlaces.release();
                 }
             });
+        } else {
+            int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 99;
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
 }
