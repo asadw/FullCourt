@@ -22,9 +22,13 @@ import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     protected GeoDataClient mGeoDataClient;
+    private Date startupTime = null;
 
     public MainActivity(){
 
@@ -32,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         DatabaseReference myOtherRef = database.getReference("some_data");
-
-        myRef.setValue("Hello, Nevada! Let's play DB!!");
+        startupTime = Calendar.getInstance().getTime();
+        myRef.setValue(startupTime.toString());
         myRef.push();
 
-        myOtherRef.setValue("Let's upload more");
+        myOtherRef.setValue(System.currentTimeMillis());
         myOtherRef.push();
     }
 
