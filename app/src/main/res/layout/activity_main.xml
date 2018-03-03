@@ -71,4 +71,19 @@
             android:layout_height="match_parent" />
     </TableLayout>
 
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="148dp"
+        android:layout_height="21dp"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="96dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="142dp"
+        android:layout_height="49dp"
+        android:text="Update Time"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="153dp" />
+
 </android.support.constraint.ConstraintLayout>
