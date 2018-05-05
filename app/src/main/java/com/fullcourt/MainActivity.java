@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.widget.Button;
+import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
@@ -28,16 +30,16 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     protected GeoDataClient mGeoDataClient;
-    private Date startupTime = null;
+    private DatabaseReference myRef;
+    private DatabaseReference myOtherRef;
 
     public MainActivity(){
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        DatabaseReference myOtherRef = database.getReference("some_data");
-        startupTime = Calendar.getInstance().getTime();
-        myRef.setValue(startupTime.toString());
+        myRef = database.getReference("message");
+        myOtherRef = database.getReference("some_data");
+        myRef.setValue(Calendar.getInstance().getTime().toString());
         myRef.push();
 
         myOtherRef.setValue(System.currentTimeMillis());
@@ -52,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         mGeoDataClient = Places.getGeoDataClient(this, null);
 
         // Construct a PlaceDetectionClient.
-        PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+        //PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
         Context baseContext = getApplicationContext();
 
         int permission = ContextCompat.checkSelfPermission(baseContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
-            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+            //Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
+/*            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                     PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
@@ -68,10 +70,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                     likelyPlaces.release();
                 }
-            });
+            });*/
         } else {
             int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 99;
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
+
+        final Button button = findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                myRef.setValue(Calendar.getInstance().getTime().toString());
+                myRef.push();
+            }
+        });
     }
 }
