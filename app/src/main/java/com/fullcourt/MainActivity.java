@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
     protected GeoDataClient mGeoDataClient;
     private DatabaseReference myRef;
-    private DatabaseReference myOtherRef;
+    //private DatabaseReference myOtherRef;
 
     public MainActivity(){
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
-        myOtherRef = database.getReference("some_data");
+        DatabaseReference myOtherRef = database.getReference("some_data");
         myRef.setValue(Calendar.getInstance().getTime().toString());
         myRef.push();
 
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         // Construct a PlaceDetectionClient.
         //PlaceDetectionClient mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
+        /*
         Context baseContext = getApplicationContext();
-
         int permission = ContextCompat.checkSelfPermission(baseContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED) {
             //Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
-/*            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+            placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                     PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     likelyPlaces.release();
                 }
-            });*/
+            });
         } else {
             int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 99;
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
+        }*/
 
         final Button button = findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
