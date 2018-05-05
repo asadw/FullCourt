@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FullCourt</string>
     <string name="greeting">Hello app!</string>
+    <string name="update_time">Update time</string>
 </resources>
