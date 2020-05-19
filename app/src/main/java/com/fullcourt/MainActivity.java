@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
@@ -34,19 +35,19 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import java.util.List;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+    public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+        private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final int RC_SIGN_IN = 123;
-    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+        private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+        private static final int RC_SIGN_IN = 123;
+        private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
-    private boolean mLocationPermissionGranted;
+        private boolean mLocationPermissionGranted;
 
-    protected GeoDataClient mGeoDataClient;
+        protected GeoDataClient mGeoDataClient;
 
-    private String uid = null;
+        private String uid = null;
 
     public MainActivity(){
 
@@ -96,38 +97,35 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 uid = user.getUid();
-
-                Dao d = Dao.getInstance();
-                d.updateTime(uid);
-
+                Dao.getInstance().updateTime(uid);
             }
         });
 
         final List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build());
-        final Button signInBtn = findViewById(R.id.button3);
-        signInBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Create and launch sign-in intent
-                startActivityForResult(AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(), RC_SIGN_IN);
-            }
+            final Button signInBtn = findViewById(R.id.button3);
+                signInBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Create and launch sign-in intent
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .build(), RC_SIGN_IN);
+                }
         });
     }
 
     private void openAutocompleteActivity() {
         try {
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
-            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
-        } catch (GooglePlayServicesRepairableException e) {
-            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            String message = "Google Play Services is not available: " + GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
-            Log.e(TAG, message);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }
-    }
+                    startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+                } catch (GooglePlayServicesRepairableException e) {
+                    GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    String message = "Google Play Services is not available: " + GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+                    Log.e(TAG, message);
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                }
+            }
 
     /**
      * Called after the autocomplete activity has finished to return its result.
@@ -141,18 +139,24 @@ public class MainActivity extends AppCompatActivity {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             uid = user.getUid();
-            Dao.getInstance().saveLocation(uid, String.valueOf(place.getName()));
+            String placeId = place.getId();
+            Dao.getInstance().saveLocation(uid, placeId, String.valueOf(place.getName()));
         } else if (requestCode == RC_SIGN_IN) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.i(TAG, "Signed in as:" + user.getEmail());
-            Log.i(TAG, "Intent Data: " + data.toString());
-        }
-    }
+            String[] places = Dao.getInstance().loadPlaces(user.getUid());
+                    Log.i(TAG, "Signed in as:" + user.getEmail());
+                    Log.i(TAG, "Intent Data: " + data.toString());
+                    TextView custom_info_contents = findViewById(R.id.custom_info_contents);
+                    for (String place: places) {
+                        custom_info_contents.append(place + "\n");
+                    }
+                }
+            }
 
-    /**
-     * Handles the result of the request for location permissions.
-     */
-    @Override
+            /**
+             * Handles the result of the request for location permissions.
+             */
+            @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
         switch (requestCode) {
